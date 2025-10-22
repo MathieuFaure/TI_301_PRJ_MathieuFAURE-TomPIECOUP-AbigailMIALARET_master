@@ -48,7 +48,7 @@ t_adjacencyList* readGraph(const char *filename) {
     while (fscanf(file, "%d %d %f", &start, &end, &proba) == 3) {     // we obtain, for each line of the file, the values start, end and proba
 
         //Add the edge that runs from 'start' to ‘end’ with the probability 'proba' to the adjacency list
-        addCell(&adj->verticesList[start], end, proba);
+        addCell(&adj->verticesList[start-1], end, proba);
     }
     fclose(file);
 
