@@ -8,4 +8,8 @@ typedef struct s_adjacencyList {
     int size;
 } t_adjacencyList;
 
+t_adjacencyList* createEmptyAdjacencyList(int size);
+void displayAdjacencyList(t_adjacencyList* adj);
+
+
 #endif //ADJACENCYLIST_H
