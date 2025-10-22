@@ -17,13 +17,13 @@ void displayList(t_list list) {
     printf("[head @] -> ");
     t_cell *curr = list.head;
     if (curr == NULL) {
-        printf("NULL\n");
+        printf("NULL");
     } else {
         while (curr->next != NULL) {
-            printf("(%d, %f) @-> ", curr->arrivalVertex, curr->proba);
+            printf("(%d, %.2f) @-> ", curr->arrivalVertex, curr->proba);
             curr = curr->next;
         }
-        printf("(%d, %f)", curr->arrivalVertex, curr->proba);
+        printf("(%d, %.2f)", curr->arrivalVertex, curr->proba);
     }
 
 }
