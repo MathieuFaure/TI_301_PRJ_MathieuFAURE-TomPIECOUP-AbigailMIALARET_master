@@ -10,6 +10,7 @@ typedef struct s_adjacencyList {
 
 t_adjacencyList* createEmptyAdjacencyList(int size);
 void displayAdjacencyList(t_adjacencyList* adj);
+t_adjacencyList* readGraph(const char *filename);
 
 
 #endif //ADJACENCYLIST_H
