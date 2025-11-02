@@ -1,5 +1,6 @@
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef UTILS_H
+#define UTILS_H
 
+char *getID(int i);
 
-#endif
+#endif //UTILS_H

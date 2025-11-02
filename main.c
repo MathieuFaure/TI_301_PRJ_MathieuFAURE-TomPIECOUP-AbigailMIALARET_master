@@ -6,7 +6,9 @@ int main() {
     // PART 1 :
 
     // test for step 1 :
-    displayAdjacencyList(readGraph("data/exemple1.txt"));
+    t_adjacencyList *graph = readGraph("data/exemple1.txt");
+    displayAdjacencyList(graph);
+    textFile(graph);
 
     return 0;
 }

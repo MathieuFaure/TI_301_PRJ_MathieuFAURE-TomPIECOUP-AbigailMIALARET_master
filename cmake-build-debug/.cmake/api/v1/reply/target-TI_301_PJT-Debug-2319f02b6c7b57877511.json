@@ -112,12 +112,6 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "utils.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
 			"path" : "cell.c",
 			"sourceGroupIndex" : 0
 		},
@@ -131,6 +125,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "adjacencyList.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "utils.c",
 			"sourceGroupIndex" : 0
 		}
 	],
