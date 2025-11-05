@@ -9,5 +9,6 @@ add_executable(TI_301_PJT
         list.c
         adjacencyList.c
         utils.c
+        tarjan.c
 )
 
