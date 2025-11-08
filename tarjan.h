@@ -1,6 +1,6 @@
 #ifndef TARJAN_H
 #define TARJAN_H
-
+#define NBMAX 50
 #include "adjacencyList.h"
 
 typedef struct s_tarjanVertex {
@@ -20,6 +20,11 @@ typedef struct s_partition {
     t_class *classes;
     int nbClasses;
 } t_partition;
+
+typedef struct s_stack {
+    t_tarjanVertex values[NBMAX];
+    int nbValues;
+} t_stack;
 
 t_tarjanVertex* initTarjanVertices(t_adjacencyList*);
 
