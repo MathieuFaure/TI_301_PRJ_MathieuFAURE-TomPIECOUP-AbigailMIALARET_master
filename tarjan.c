@@ -76,7 +76,7 @@ void displayPartition(t_partition *partition) {
     }
 }
 
-void tarjan(t_adjacencyList *graph) {
+t_partition *tarjan(t_adjacencyList *graph) {
     int index = 0;
 
     t_tarjanVertex *vertices = initTarjanVertices(graph);
@@ -84,18 +84,16 @@ void tarjan(t_adjacencyList *graph) {
     t_stack stack;
     stack.nbValues = 0;
 
-    t_partition partition;
-    partition.nbClasses = 0;
-    partition.classes = malloc(NBMAX * sizeof(t_class));
+    t_partition *partition = malloc(sizeof(t_partition));
+    partition->nbClasses = 0;
+    partition->classes = malloc(NBMAX * sizeof(t_class));
 
     for (int v = 0; v < graph->size; v++) {
         if (vertices[v].index == -1) {
-            parcours(v, graph, vertices, &stack, &index, &partition);
+            parcours(v, graph, vertices, &stack, &index, partition);
         }
     }
 
-    displayPartition(&partition);
-    free(partition.classes);
-    free(vertices);
+    return partition;
 }
 

@@ -25,8 +25,8 @@ int main() {
 
     // test for step 1 :
 
-    /*t_adjacencyList *graph4 = readGraph("data/exemple2.txt");
-    tarjan(graph4);*/
+    t_adjacencyList *graph4 = readGraph("data/exemple2.txt");
+    displayPartition(tarjan(graph4));
 
     // test for step 2 :
 

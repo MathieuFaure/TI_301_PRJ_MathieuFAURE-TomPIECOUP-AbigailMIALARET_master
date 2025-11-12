@@ -1,6 +1,18 @@
 #ifndef __HASSE_H__
 #define __HASSE_H__
 
+#include "tarjan.h"
+
+typedef struct s_link {
+    int from;
+    int to;
+} t_link;
+
+typedef struct s_link_array {
+    t_link *links;
+    int log_size;
+} t_link_array;
+
 void removeTransitiveLinks(t_link_array *p_link_array);
 
 /**

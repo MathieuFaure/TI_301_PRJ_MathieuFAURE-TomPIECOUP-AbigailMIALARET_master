@@ -1,6 +1,12 @@
 #include <malloc.h>
 #include "hasse.h"
 
+void initLinkArray(t_adjacencyList *graph) {
+    t_partition *partition = tarjan(graph);
+    for (int i = 0; i < graph->size; i++) {
+
+    }
+}
 
 void removeTransitiveLinks(t_link_array *p_link_array)
 {

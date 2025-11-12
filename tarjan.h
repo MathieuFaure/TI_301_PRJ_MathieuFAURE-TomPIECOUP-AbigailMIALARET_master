@@ -30,6 +30,7 @@ t_tarjanVertex* initTarjanVertices(t_adjacencyList*);
 void push(t_stack *stack, t_tarjanVertex* vertex);
 t_tarjanVertex* pop(t_stack *stack);
 void parcours(int v, t_adjacencyList *graph, t_tarjanVertex *vertices, t_stack *stack, int *indexPtr, t_partition *partition);
-void tarjan(t_adjacencyList *graph);
+t_partition *tarjan(t_adjacencyList *graph);
+void displayPartition(t_partition *partition);
 
 #endif //TARJAN_H
