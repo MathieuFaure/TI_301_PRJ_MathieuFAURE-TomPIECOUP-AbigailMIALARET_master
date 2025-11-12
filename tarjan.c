@@ -12,3 +12,90 @@ t_tarjanVertex* initTarjanVertices(t_adjacencyList* adj) {
     }
     return vertices;
 }
+
+void push(t_stack *stack, t_tarjanVertex* vertex) {
+    stack->values[stack->nbValues] = vertex;
+    stack->nbValues++;
+}
+
+t_tarjanVertex* pop(t_stack *stack) {
+    stack->nbValues--;
+    return stack->values[stack->nbValues];
+}
+
+void parcours(int v, t_adjacencyList *graph, t_tarjanVertex *vertices, t_stack *stack, int *index, t_partition *partition) {
+    vertices[v].index = *index;
+    vertices[v].accessibleNumber = *index;
+    *index += 1;
+    vertices[v].onStack = 1;
+
+    push(stack,&vertices[v]);
+
+    t_cell *curr = graph->verticesList[v].head;
+    while (curr != NULL) {
+        int w = curr->arrivalVertex - 1;
+
+        if (vertices[w].index == -1) {
+            parcours(w, graph, vertices, stack, index, partition);
+            if (vertices[w].accessibleNumber < vertices[v].accessibleNumber)
+                vertices[v].accessibleNumber = vertices[w].accessibleNumber;
+        }
+        else if (vertices[w].onStack) {
+            if (vertices[w].index < vertices[v].accessibleNumber)
+                vertices[v].accessibleNumber = vertices[w].index;
+        }
+
+        curr = curr->next;
+    }
+
+    if (vertices[v].accessibleNumber == vertices[v].index) {
+        t_class newClass;
+        sprintf(newClass.name, "C%d", partition->nbClasses + 1);
+        newClass.nbVertices = 0;
+
+        t_tarjanVertex *w;
+        do {
+            w = pop(stack);
+            w->onStack = 0;
+
+            newClass.vertices[newClass.nbVertices++] = w;
+        } while (w != &vertices[v]);
+
+        partition->classes[partition->nbClasses++] = newClass;
+    }
+}
+
+
+void displayPartition(t_partition *partition) {
+    for (int i = 0; i < partition->nbClasses; i++) {
+        printf("Component C%d: {", i+1);
+        for (int j = 0; j < partition->classes[i].nbVertices-1; j++) {
+            printf("%d,", partition->classes[i].vertices[j]->id);
+        }
+        printf("%d}\n", partition->classes[i].vertices[partition->classes[i].nbVertices-1]->id);
+    }
+}
+
+void tarjan(t_adjacencyList *graph) {
+    int index = 0;
+
+    t_tarjanVertex *vertices = initTarjanVertices(graph);
+
+    t_stack stack;
+    stack.nbValues = 0;
+
+    t_partition partition;
+    partition.nbClasses = 0;
+    partition.classes = malloc(NBMAX * sizeof(t_class));
+
+    for (int v = 0; v < graph->size; v++) {
+        if (vertices[v].index == -1) {
+            parcours(v, graph, vertices, &stack, &index, &partition);
+        }
+    }
+
+    displayPartition(&partition);
+    free(partition.classes);
+    free(vertices);
+}
+
