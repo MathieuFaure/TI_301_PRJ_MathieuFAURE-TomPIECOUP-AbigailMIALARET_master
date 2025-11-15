@@ -4,8 +4,8 @@
 #include "tarjan.h"
 
 typedef struct s_link {
-    int from;
-    int to;
+    t_class *from;
+    t_class *to;
 } t_link;
 
 typedef struct s_link_array {
@@ -13,6 +13,7 @@ typedef struct s_link_array {
     int log_size;
 } t_link_array;
 
+t_link_array initLinkArray(t_adjacencyList *graph);
 void removeTransitiveLinks(t_link_array *p_link_array);
 
 /**
