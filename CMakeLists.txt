@@ -10,5 +10,6 @@ add_executable(TI_301_PJT
         adjacencyList.c
         utils.c
         tarjan.c
+        hasse.c
 )
 

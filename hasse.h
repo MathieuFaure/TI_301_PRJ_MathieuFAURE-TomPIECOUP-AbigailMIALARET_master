@@ -13,7 +13,8 @@ typedef struct s_link_array {
     int log_size;
 } t_link_array;
 
-t_link_array initLinkArray(t_adjacencyList *graph);
+t_link_array *initLinkArray(t_adjacencyList *graph, t_partition *partition);
+void textFileHasse(t_partition *partition, t_link_array *linkArray);
 void removeTransitiveLinks(t_link_array *p_link_array);
 
 /**

@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <stdio.h>
 #include "hasse.h"
 
 t_class **arrayClass(t_adjacencyList *graph, t_partition *partition) {
@@ -19,13 +20,12 @@ t_class **arrayClass(t_adjacencyList *graph, t_partition *partition) {
     return verticesClass;
 }
 
-t_link_array initLinkArray(t_adjacencyList *graph) {
-    t_partition *partition = tarjan(graph);
+t_link_array *initLinkArray(t_adjacencyList *graph, t_partition *partition) {
 	t_class **array = arrayClass(graph,partition);
 
-    t_link_array linkArray;
-    linkArray.links = malloc(NBMAX * sizeof(t_link));   // enough for now
-    linkArray.log_size = 0;
+    t_link_array *linkArray = malloc(sizeof(t_link_array));
+    linkArray->links = malloc(NBMAX * sizeof(t_link));
+    linkArray->log_size = 0;
 
     for (int i = 0; i < graph->size; i++) {
 		t_class *Ci = array[i];
@@ -36,19 +36,18 @@ t_link_array initLinkArray(t_adjacencyList *graph) {
             t_class *Cj = array[j];
 
             if (Ci != Cj) {
-
                 int exists = 0;
-                for (int k = 0; k < linkArray.log_size; k++) {
-                    if (linkArray.links[k].from == Ci && linkArray.links[k].to == Cj) {
+                for (int k = 0; k < linkArray->log_size; k++) {
+                    if (linkArray->links[k].from == Ci && linkArray->links[k].to == Cj) {
                         exists = 1;
                         break;
                     }
                 }
 
                 if (!exists) {
-                    linkArray.links[linkArray.log_size].from = Ci;
-                    linkArray.links[linkArray.log_size].to = Cj;
-                    linkArray.log_size++;
+                    linkArray->links[linkArray->log_size].from = Ci;
+                    linkArray->links[linkArray->log_size].to = Cj;
+                    linkArray->log_size++;
                 }
             }
 
@@ -58,6 +57,45 @@ t_link_array initLinkArray(t_adjacencyList *graph) {
 
     free(array);
     return linkArray;
+}
+
+void textFileHasse(t_partition *partition, t_link_array *linkArray) {
+    FILE *file = fopen("textFileHasse.txt", "wt");
+
+    fprintf(file, "---\nconfig:\n\tlayout: elk\n\ttheme: neo\n\tlook: neo\n---\n\nflowchart LR\n");
+
+    for (int i = 0; i < partition->nbClasses; i++) {
+        fprintf(file,"%s[\"{",getID(i+1));
+
+        for (int j = 0; j < partition->classes[i].nbVertices - 1; j++) {
+        	fprintf(file,"%d,",partition->classes[i].vertices[j]->id);
+        }
+        fprintf(file,"%d",partition->classes[i].vertices[partition->classes[i].nbVertices-1]->id);
+
+        fprintf(file,"}\"]\n");
+    }
+
+    fprintf(file,"\n");
+
+    for (int i = 0; i < linkArray->log_size; i++) {
+    	for (int j = 0; j < partition->nbClasses; j++) {
+        	if (&partition->classes[j] == linkArray->links[i].from) {
+            	fprintf(file,"%s",getID(j+1));
+                break;
+        	}
+    	}
+        fprintf(file," --> ");
+        for (int j = 0; j < partition->nbClasses; j++) {
+        	if (&partition->classes[j] == linkArray->links[i].to) {
+            	fprintf(file,"%s\n",getID(j+1));
+                break;
+        	}
+        }
+    }
+    free(linkArray->links);
+    free(linkArray);
+	fprintf(file,"\n");
+    fclose(file);
 }
 
 void removeTransitiveLinks(t_link_array *p_link_array)

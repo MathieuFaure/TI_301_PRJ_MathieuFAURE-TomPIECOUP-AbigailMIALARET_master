@@ -86,7 +86,6 @@ void textFile(t_adjacencyList* adj) {
     for (int i = 0; i < adj->size; i++) {
         t_cell *curr = adj->verticesList[i].head;
         while (curr != NULL) {
-            printf("arrivalVertex : %d et la lettre : %s\n",curr->arrivalVertex,getID(curr->arrivalVertex));
             fprintf(file,"\n%s -->|%.2f|",getID(i+1),curr->proba);
             fprintf(file,"%s",getID(curr->arrivalVertex));
             curr = curr->next;
