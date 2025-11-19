@@ -16,6 +16,7 @@ typedef struct s_link_array {
 t_link_array *initLinkArray(t_adjacencyList *graph, t_partition *partition);
 void textFileHasse(t_partition *partition, t_link_array *linkArray);
 void removeTransitiveLinks(t_link_array *p_link_array);
+void displayCharacteristics(t_partition *partition, t_link_array *linkArray);
 
 /**
  * @brief Creates a link array from the given partition and graph.

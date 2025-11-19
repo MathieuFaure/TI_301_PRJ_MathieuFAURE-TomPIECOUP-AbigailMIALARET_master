@@ -143,3 +143,55 @@ void removeTransitiveLinks(t_link_array *p_link_array)
         }
     }
 }
+
+
+void displayCharacteristics(t_partition *partition, t_link_array *linkArray) {
+    for (int i = 0; i < partition->nbClasses; i++) {
+        printf("C%d : {",i+1);
+
+        for (int j = 0; j < partition->classes[i].nbVertices - 1; j++) {
+            printf("%d,",partition->classes[i].vertices[j]->id);
+        }
+        printf("%d",partition->classes[i].vertices[partition->classes[i].nbVertices-1]->id);
+
+        printf("}\n");
+    }
+
+    for (int i = 0; i < partition->nbClasses; i++) {
+        int transient = 0;
+        for (int j = 0; j < linkArray->log_size; j++) {
+            if (&partition->classes[i] == linkArray->links[j].from) {
+                transient = 1;
+                printf("The class %s is transient - ",partition->classes[i].name);
+                if (partition->classes[i].nbVertices == 1) {
+                    printf("state %d is transient.\n",partition->classes[i].vertices[0]->id);
+                    break;
+                }
+                printf("states ");
+                for (int k = 0; k < partition->classes[i].nbVertices-1; k++) {
+                    printf("%d,",partition->classes[i].vertices[k]->id);
+                }
+                printf("%d are transient.\n",partition->classes[i].vertices[partition->classes[i].nbVertices-1]->id);
+            }
+        }
+
+        if (!transient) {
+            printf("The class %s is persistent - ",partition->classes[i].name);
+            if (partition->classes[i].nbVertices == 1) {
+                printf("state %d is persistent - state %d is absorbing.\n",partition->classes[i].vertices[0]->id, partition->classes[i].vertices[0]->id);
+            } else {
+                printf("states ");
+                for (int k = 0; k < partition->classes[i].nbVertices-1; k++) {
+                    printf("%d,",partition->classes[i].vertices[k]->id);
+                }
+                printf("%d are persistent.\n",partition->classes[i].vertices[partition->classes[i].nbVertices-1]->id);
+            }
+        }
+    }
+
+    if (partition->nbClasses == 1) {
+        printf("The Markov Graph is irreducible.\n");
+    } else {
+        printf("The Markov Graph is not irreducible.\n");
+    }
+}

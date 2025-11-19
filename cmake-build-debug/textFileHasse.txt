@@ -1,8 +1,8 @@
 ---
 config:
-layout: elk
-theme: neo
-look: neo
+	layout: elk
+	theme: neo
+	look: neo
 ---
 
 flowchart LR
