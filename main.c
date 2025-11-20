@@ -1,11 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "adjacencyList.h"
 #include "tarjan.h"
 #include "hasse.h"
 #include "matrix.h"
 
 int main() {
-
     // PART 1 :
 
     // test for step 1 :
@@ -49,45 +49,40 @@ int main() {
     // test for step 1 :
 
     /*t_adjacencyList *graph7 = readGraph("data/exemple_meteo.txt");
-    float **matrix1 = createMatrix(graph7,graph7->size);
-    float **M3 = createMatrix(graph7,graph7->size);
-    float **M7 = createMatrix(graph7,graph7->size);
+    t_matrix *matrix1 = createMatrix(graph7,graph7->size);
+    t_matrix *M3 = getMn(matrix1,3);
+    t_matrix *M7 = getMn(matrix1,7);
 
     printf("Matrix M :\n");
-    displayMatrix(matrix1,graph7->size);
-
-    for(int i=0;i<2;i++) {
-        M3 = multiply(matrix1,M3,graph7->size);
-    }
+    displayMatrix(matrix1);
 
     printf("Matrix M3 :\n");
-    displayMatrix(M3,graph7->size);
-
-    for(int i=0;i<6;i++) {
-        M7 = multiply(matrix1,M7,graph7->size);
-    }
+    displayMatrix(M3);
 
     printf("Matrix M7 :\n");
-    displayMatrix(M7,graph7->size);*/
+    displayMatrix(M7);
 
     // test for Mn
 
-    /*t_adjacencyList *graph8 = readGraph("data/exemple_meteo.txt");
-    float **matrix2 = createMatrix(graph8,graph8->size);
-    float **Mn = createMatrix(graph8,graph8->size);
-    float **MN = multiply(matrix2,Mn,graph8->size);
+    t_matrix *stationnaryMn = getStationnaryMn(matrix1);
+    printf("The stationnary Mn is :\n");
+    displayMatrix(stationnaryMn);*/
 
-    int n = 2;
+    // test for step 2 :
 
-    while (difference(MN,Mn,graph8->size) >= 0.01) {
-        MN = multiply(MN,matrix2,graph8->size);
-        Mn = multiply(Mn,matrix2,graph8->size);
-        n += 1;
-    }
+    /*t_adjacencyList *graph8 = readGraph("data/exemple2.txt");
+    t_matrix *matrix2 = createMatrix(graph8,graph8->size);
+    t_partition *partition8 = tarjan(graph8);
 
-    printf("Mn for which the difference between Mn and Mn-1 is less than 0.01 is M%d",n);*/
+    float *initialDistribution = malloc(5 * sizeof(float));
 
+    initialDistribution[0] = 0.0f;
+    initialDistribution[1] = 0.0f;
+    initialDistribution[2] = 1.0f;
+    initialDistribution[3] = 0.0f;
+    initialDistribution[4] = 0.0f;
 
+    displayStationnaryPartitionDistribution(matrix2,partition8,initialDistribution);*/
 
     return 0;
 }
