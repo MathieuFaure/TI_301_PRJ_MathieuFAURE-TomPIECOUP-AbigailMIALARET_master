@@ -19,10 +19,10 @@ t_matrix *createSubMatrix(t_matrix *matrix, t_partition *part, int compo_index);
 t_matrix *getMn(t_matrix *matrix, int n);
 float *getDistribution(const float *initialDistribution, t_matrix *matrix);
 float *getMnDistribution(float *initialDistribution, t_matrix *matrix, int n);
-t_matrix *getStationnaryMn(t_matrix *matrix);
-float *getStationnaryDistribution(float *initialDistribution, t_matrix *matrix);
+t_matrix *getStationaryMn(t_matrix *matrix);
+float *getStationaryDistribution(float *initialDistribution, t_matrix *matrix);
 void displayDistribution(float *distribution, int size);
-void displayStationnaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution);
+void displayStationaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution);
 
 
 #endif //MATRIX_H

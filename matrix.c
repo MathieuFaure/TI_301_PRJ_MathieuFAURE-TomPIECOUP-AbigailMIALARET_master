@@ -128,12 +128,12 @@ t_matrix *getMn(t_matrix *matrix, int n) {
 
 float *getDistribution(const float *initialDistribution, t_matrix *matrix) {
     float *finalDistribution = malloc(sizeof(float) * matrix->n);
-    for (int i = 0; i < matrix->n; i++) {
+    for (int j = 0; j < matrix->n; j++) {
         float sum = 0;
-        for (int j = 0; j < matrix->n; j++) {
-            sum += initialDistribution[j] * matrix->values[i][j];
+        for (int i = 0; i < matrix->n; i++) {
+            sum += initialDistribution[i] * matrix->values[i][j];
         }
-        finalDistribution[i] = sum;
+        finalDistribution[j] = sum;
     }
 
     return finalDistribution;
@@ -145,7 +145,7 @@ float *getMnDistribution(float *initialDistribution, t_matrix *matrix, int n) {
     return getDistribution(initialDistribution, Mn);
 }
 
-t_matrix *getStationnaryMn(t_matrix *matrix) {
+t_matrix *getStationaryMn(t_matrix *matrix) {
     t_matrix *Mn = copyValues(matrix);
     t_matrix * MN = multiply(Mn,matrix);
     while (difference(MN,Mn) > 0.01) {
@@ -155,9 +155,9 @@ t_matrix *getStationnaryMn(t_matrix *matrix) {
     return MN;
 }
 
-float *getStationnaryDistribution(float *initialDistribution, t_matrix *matrix) {
-    t_matrix *stationnaryMn = getStationnaryMn(matrix);
-    return getDistribution(initialDistribution, stationnaryMn);
+float *getStationaryDistribution(float *initialDistribution, t_matrix *matrix) {
+    t_matrix *stationaryMn = getStationaryMn(matrix);
+    return getDistribution(initialDistribution, stationaryMn);
 }
 
 void displayDistribution(float *distribution, int size) {
@@ -169,11 +169,12 @@ void displayDistribution(float *distribution, int size) {
 }
 
 
-void displayStationnaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution) {
+void displayStationaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution) {
     for (int i = 0; i < partition->nbClasses; i++) {
-        printf("%s stationnary distribution : ",partition->classes[i].name);
+        displayPartition(partition);
+        printf("%s stationary distribution : ",partition->classes[i].name);
         t_matrix *subMatrix = createSubMatrix(matrix,partition,i);
-        displayDistribution(getStationnaryDistribution(initialDistribution,subMatrix), subMatrix->n);
+        displayDistribution(getStationaryDistribution(initialDistribution,subMatrix), subMatrix->n);
     }
 }
 

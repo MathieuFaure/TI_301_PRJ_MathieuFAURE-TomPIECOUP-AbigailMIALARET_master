@@ -70,7 +70,7 @@ int main() {
 
     // test for step 2 :
 
-    /*t_adjacencyList *graph8 = readGraph("data/exemple2.txt");
+    /*t_adjacencyList *graph8 = readGraph("data/exemple_meteo.txt");
     t_matrix *matrix2 = createMatrix(graph8,graph8->size);
     t_partition *partition8 = tarjan(graph8);
 
@@ -82,7 +82,7 @@ int main() {
     initialDistribution[3] = 0.0f;
     initialDistribution[4] = 0.0f;
 
-    displayStationnaryPartitionDistribution(matrix2,partition8,initialDistribution);*/
+    displayStationaryPartitionDistribution(matrix2,partition8,initialDistribution);*/
 
     return 0;
 }
