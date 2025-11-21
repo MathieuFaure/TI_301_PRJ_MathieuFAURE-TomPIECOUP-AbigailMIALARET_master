@@ -23,6 +23,9 @@ t_matrix *getStationaryMn(t_matrix *matrix);
 float *getStationaryDistribution(float *initialDistribution, t_matrix *matrix);
 void displayDistribution(float *distribution, int size);
 void displayStationaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution);
+int gcd(int *vals, int nbvals);
+int getPeriod(t_matrix *sub_matrix);
+void displayPartitionPeriods(t_partition *partition, t_matrix *matrix);
 
 
 #endif //MATRIX_H

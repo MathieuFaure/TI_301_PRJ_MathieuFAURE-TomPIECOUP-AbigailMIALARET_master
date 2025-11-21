@@ -170,18 +170,100 @@ void displayDistribution(float *distribution, int size) {
 
 
 void displayStationaryPartitionDistribution(t_matrix *matrix, t_partition *partition, float *initialDistribution) {
+    displayPartition(partition);
     for (int i = 0; i < partition->nbClasses; i++) {
-        displayPartition(partition);
-        printf("%s stationary distribution : ",partition->classes[i].name);
+
         t_matrix *subMatrix = createSubMatrix(matrix,partition,i);
-        displayDistribution(getStationaryDistribution(initialDistribution,subMatrix), subMatrix->n);
+
+        int period = getPeriod(subMatrix);
+
+        if (period > 1) {
+            printf("%s : period = %d -> no stationary distribution.\n", partition->classes[i].name, period);
+        } else {
+            printf("%s stationary distribution : ",partition->classes[i].name);
+
+            float *dist = getStationaryDistribution(initialDistribution, subMatrix);
+            displayDistribution(dist, subMatrix->n);
+            free(dist);
+        }
+        for (int r = 0; r < subMatrix->n; r++) {
+            free(subMatrix->values[r]);
+        }
+        free(subMatrix->values);
+        free(subMatrix);
     }
 }
 
 
 
+int gcd(int *vals, int nbvals) {
+    if (nbvals == 0) return 0;
+    int result = vals[0];
+    for (int i = 1; i < nbvals; i++) {
+        int a = result;
+        int b = vals[i];
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        result = a;
+    }
+    return result;
+}
+
+int getPeriod(t_matrix *sub_matrix) {
+    int n = sub_matrix->n;
+    int *periods = malloc(n * sizeof(int));
+    int period_count = 0;
+
+    t_matrix *power_matrix = copyValues(sub_matrix);
+
+    for (int k = 1; k <= n; k++)
+    {
+        int diag_nonzero = 0;
+        for (int i = 0; i < n; i++) {
+            if (power_matrix->values[i][i] > 0.0f)
+            {
+                diag_nonzero = 1;
+            }
+        }
+
+        if (diag_nonzero) {
+            periods[period_count] = k;
+            period_count++;
+        }
+
+        t_matrix *new_power = multiply(power_matrix, sub_matrix);
+        power_matrix = new_power;
+    }
+
+    int period = gcd(periods, period_count);
+    free(periods);
+
+    for (int i = 0; i < n; i++) {
+        free(power_matrix->values[i]);
+    }
+    free(power_matrix->values);
+    free(power_matrix);
+
+    return period;
+}
 
 
+void displayPartitionPeriods(t_partition *partition, t_matrix *matrix) {
+    for (int i = 0; i < partition->nbClasses; i++) {
+        printf("%s period : ",partition->classes[i].name);
+        t_matrix *subMatrix = createSubMatrix(matrix,partition,i);
+        printf("%d\n", getPeriod(subMatrix));
+
+        for (int r = 0; r < subMatrix->n; r++) {
+            free(subMatrix->values[r]);
+        }
+        free(subMatrix->values);
+        free(subMatrix);
+    }
+}
 
 
 
