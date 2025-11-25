@@ -15,12 +15,12 @@ int main() {
 
     // test for step 2 :
 
-    /*t_adjacencyList *graph2 = readGraph("filename.txt");
+    /*t_adjacencyList *graph2 = readGraph("data/exemple1_from_chatGPT.txt");
     markovGraphOrNot(graph2);*/
 
     // test for step 3 :
 
-    /*t_adjacencyList *graph3 = readGraph("filename.txt");
+    /*t_adjacencyList *graph3 = readGraph("data/exemple2.txt");
     textFile(graph3);*/
 
     // PART 2 :
@@ -61,13 +61,13 @@ int main() {
     displayMatrix(M3);
 
     printf("Matrix M7 :\n");
-    displayMatrix(M7);
+    displayMatrix(M7);*/
 
     // test for Mn
 
-    t_matrix *stationnaryMn = getStationnaryMn(matrix1);
-    printf("The stationnary Mn is :\n");
-    displayMatrix(stationnaryMn);*/
+    /*t_matrix *stationaryMn = getStationaryMn(matrix1);
+    printf("The stationary Mn is :\n");
+    displayMatrix(stationaryMn);*/
 
     // test for step 2 :
 
